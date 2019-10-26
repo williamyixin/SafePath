@@ -1,4 +1,5 @@
 from node import Node
+from edge import Edge
 import heapq
 
 
@@ -49,11 +50,13 @@ class Algorithms:
                     if edge.end.label > edge.start.label + distance:
                         edge.end.label = edge.start.label + distance
                         edge.fastest_trace_previous_node = edge.start
+                        main_frame.highlight_node(edge.fastest_trace_previous_node)
                 #Detect negative weight cycle paradoxes
-                for edge in list_edges:
-                    if edge.end.label > edge.start.label:
-                        print("Negative weight cycle detected")
+                #for edge in list_edges:
+                 #   if edge.end.label > edge.start.label:
+                        #print("Negative weight cycle detected")
 
+            bellman_ford(start_node, Edge.edge_list, Node.node_list)
             return self.getPath(end_node)
 
         #Gets the path. Assumes the graph has already been processed through
@@ -63,7 +66,7 @@ class Algorithms:
                              "Bidrectional Dijkstra": bidirectional_dijkstra,
                              "Bellman Fords": bellman_ford_path_gen}
 
-    def getPath(end_node):
+    def getPath(self, end_node):
         if end_node.fastest_trace_previous_node:
-            return getPath(end_node.fastest_trace_previous_node) + [end_node]
+            return self.getPath(end_node.fastest_trace_previous_node) + [end_node]
         return [end_node]

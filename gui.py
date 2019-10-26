@@ -100,8 +100,11 @@ class MainFrame(Frame):
 
             def path_finder():
                 path_list = self.algorithms.function_map[self.graph_algorithms.get()](self.start_node, self.end_node)
+
+                print(len(path_list))
                 for i in range(len(path_list) - 1):
                     path_list[i].highlight_edge(self.canvas, path_list[i+1])
+                    print(path_list[i].center_x)
                 self.canvas.update()
                 self.finding_path = False
                 self.path_finder_button.configure(state="normal")
