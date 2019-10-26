@@ -49,7 +49,7 @@ class Algorithms:
                         distance = pow(2,distance) #double if it's uphill: change to exponential?
                     if edge.end.label > edge.start.label + distance:
                         edge.end.label = edge.start.label + distance
-                        edge.fastest_trace_previous_node = edge.start
+                        edge.end.fastest_trace_previous_node = edge.start
                         main_frame.highlight_node(edge.fastest_trace_previous_node)
                 #Detect negative weight cycle paradoxes
                 #for edge in list_edges:
@@ -68,5 +68,5 @@ class Algorithms:
 
     def getPath(self, end_node):
         if end_node.fastest_trace_previous_node:
-            return self.getPath(end_node.fastest_trace_previous_node) + [end_node]
+            return self.getPath(end_node.fastest_trace_previous_node).append(end_node)
         return [end_node]
