@@ -178,7 +178,7 @@ class MainFrame(Frame):
                     grid[i][j].connections.append(Edge(grid[i][j], grid[i][j-1]))
                 if grid[i][j].flipped and i > 0:
                     grid[i][j].connections.append(Edge(grid[i][j], grid[i-1][j]))
-                if not grid[i][j].flipped and i < len(grid) - 2:
+                if not grid[i][j].flipped and i < len(grid) - 1:
                     grid[i][j].connections.append(Edge(grid[i][j], grid[i + 1][j]))
                 Edge.edge_list.extend(grid[i][j].connections)
 
@@ -207,6 +207,7 @@ class MainFrame(Frame):
                 if node.contains(x, y):
                     selected_node = node
                     break
+
 
         # check if the selected node has already been selected
         if selected_node is not None and selected_node not in self.passed_nodes:
