@@ -90,7 +90,7 @@ class MainFrame(Frame):
         # Add Algorithm Select combobox
         Label(self.grid_frame, text="Select algorithm : ").pack(side=LEFT)
         self.graph_algorithms = ttk.Combobox(self.grid_frame, values=list(self.algorithms.function_map.keys()))
-        self.graph_algorithms.current(0)
+        self.graph_algorithms.current(2)
         self.graph_algorithms.pack(side=LEFT)
 
         # Add Start Paths Button
