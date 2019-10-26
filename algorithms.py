@@ -14,21 +14,24 @@ class Algorithms:
             main_frame.highlight_node(start_node)
 
             # Actual Dijkstra's stuff
-            node_list = Node.node_list[:]
+            node_list = Node.node_list.copy()
             distances, previous_nodes = {i : float('inf') for i in node_list}, {i : None for i in node_list}
             distances[start_node] = 0
             nodes = node_list.copy()
+
+            print(len(distances.keys()))
                     
             while nodes:
-                current_node = min(nodes, lambda x: distances[x])
+                current_node = min(nodes, key=lambda x: distances[x])
                 if distances[current_node] == float('inf'):
                     break
                 for neighbor in current_node.connections:
-                    alternative = distances[current_node] + neighbor.weight
-                    if alternative < distances[neighbor]:
-                        distances[neighbor] = alternative
-                        previous_nodes[neighbor] = current_node
-            nodes.remove(current_node)
+                    alternative = distances[current_node] + neighbor.end.weight
+                    if alternative < distances[neighbor.end]:
+                        distances[neighbor.end] = alternative
+                        previous_nodes[neighbor.end] = current_node
+                    main_frame.highlight_node(neighbor.end)
+                nodes.remove(current_node)
 
             path, current_node = [], end_node
             while previous_nodes[current_node]:
