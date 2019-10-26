@@ -22,6 +22,7 @@ class Node:
         self.y = y
         self.weight = 0
         self.flipped = flipped
+        self.fastest_trace_previous_node = None
 
         self.center_x = x + Node.node_size//2
         if self.flipped:
