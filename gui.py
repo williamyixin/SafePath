@@ -99,7 +99,7 @@ class MainFrame(Frame):
         def start_path_finder():
             self.finding_path = True
             self.path_finder_button.configure(state="disabled")
-
+            self.clear_grid_button.configure(state="disabled")
             def path_finder():
                 path_list = self.algorithms.function_map[self.graph_algorithms.get()](self.start_node, self.end_node)
 
@@ -116,9 +116,10 @@ class MainFrame(Frame):
                 self.canvas.update()
                 self.finding_path = False
                 self.path_finder_button.configure(state="normal")
+                self.clear_grid_button.configure(state="normal")
 
-            thread = Thread(target=path_finder)
-            thread.start()
+            self.current_thread = Thread(target=path_finder)
+            self.current_thread.start()
 
         self.path_finder_button = Button(self.grid_frame, text="Start Path Finder",
                                          command=start_path_finder).pack(side=LEFT, padx=(10, 0))
@@ -133,12 +134,16 @@ class MainFrame(Frame):
             self.draw_grid()
             self.update()
 
-        Button(self.grid_frame, text="Clear Grid", command = clear_grid).pack(side=LEFT, padx = (10,0))
+        self.clear_grid_button = Button(self.grid_frame, text="Clear Grid", command=clear_grid)
+        self.clear_grid_button.pack(side=LEFT, padx=(10, 0))
+
 
         # Create instance of Canvas and add to main Frame
 
         self.canvas = Canvas(self, width=self.frame_width, height=self.frame_height, bg='white')
         self.canvas.pack(side=BOTTOM)
+
+
 
         # Handling mouse events
 
