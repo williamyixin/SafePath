@@ -101,6 +101,10 @@ class MainFrame(Frame):
             def path_finder():
                 path_list = self.algorithms.function_map[self.graph_algorithms.get()](self.start_node, self.end_node)
 
+                for row in self.node_grid:
+                    for node in row:
+                        node.is_highlighted = False
+
                 print(len(path_list))
                 for i in range(len(path_list) - 1):
                     path_list[i].highlight_edge(self.canvas, path_list[i+1])
