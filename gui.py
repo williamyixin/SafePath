@@ -161,6 +161,7 @@ class MainFrame(Frame):
                     grid[i][j].connections.append(Edge(grid[i][j], grid[i-1][j]))
                 if not grid[i][j].flipped and i < len(grid) - 2:
                     grid[i][j].connections.append(Edge(grid[i][j], grid[i + 1][j]))
+                Edge.edge_list.extend(grid[i][j].connections)
 
     def highlight_node(self, node):
         node.is_highlighted = True
