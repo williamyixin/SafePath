@@ -5,6 +5,8 @@ from threading import Thread
 from algorithms import Algorithms
 from edge import Edge
 
+import sys
+
 import time
 
 #######
@@ -17,7 +19,7 @@ class MainFrame(Frame):
     # Widget Initialization #
     #########################
 
-    def __init__(self, parent, node_width = 40, node_height = 80):
+    def __init__(self, parent, node_width = 20, node_height = 40):
         super().__init__(parent)
 
         self.node_width = node_width
@@ -104,6 +106,8 @@ class MainFrame(Frame):
                 for row in self.node_grid:
                     for node in row:
                         node.is_highlighted = False
+
+                self.draw_grid()
 
                 print(len(path_list))
                 for i in range(len(path_list) - 1):
@@ -232,7 +236,20 @@ class MainFrame(Frame):
         super().destroy()
         exit(1)
 
-def run_GUI():
+class popupWindow(object):
+    def __init__(self,master):
+        top=self.top=Toplevel(master)
+        self.l=Label(top,text="Hello World")
+        self.l.pack()
+        self.e=Entry(top)
+        self.e.pack()
+        self.b=Button(top,text='Ok',command=self.cleanup)
+        self.b.pack()
+    def cleanup(self):
+        self.value=self.e.get()
+        self.top.destroy()
+
+def run_GUI(args=[]):
     """Start the GUI.
 
     computer -- True if playing against computer
@@ -242,7 +259,10 @@ def run_GUI():
     root.minsize(800, 600)
     root.geometry("520x600")
 
-    app = MainFrame(root)
+    if len(args) == 3:
+        app = MainFrame(root, int(args[1]), int(args[2]))
+    else:
+        app = MainFrame(root)
     root.mainloop()
 
 
@@ -252,7 +272,7 @@ def run_GUI():
 
 def run():
 
-    run_GUI()
+    run_GUI(sys.argv)
 
 if __name__ == '__main__':
     run()
