@@ -1,4 +1,5 @@
 from node import Node
+import heapq
 
 
 class Algorithms:
