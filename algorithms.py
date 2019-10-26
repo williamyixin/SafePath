@@ -45,6 +45,8 @@ class Algorithms:
                 #Edge relaxation algorithm
                 for i in range(len(list_nodes) - 1):
                     for edge in list_edges:
+                        if edge.end.is_barrier or edge.start.is_barrier:
+                            continue
                         distance = edge.end.weight - edge.start.weight
                         if distance > 0:
                             distance = pow(2,distance) #double if it's uphill: change to exponential?
