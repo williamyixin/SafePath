@@ -88,6 +88,9 @@ class Node:
     def reset(self):
         self.weight = 0
         self.is_barrier = False
+        self.is_highlighted = False
+        self.is_start = False
+        self.is_end = False
 
     def highlight_edge(self, canvas, other):
         canvas.create_line(self.center_x, self.center_y, other.center_x, other.center_y, fill='red', width=2)
