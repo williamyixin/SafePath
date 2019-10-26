@@ -117,8 +117,9 @@ class MainFrame(Frame):
 
         # Add Clear Grid button
         def clear_grid():
-            for node in self.node_grid:
-                node.reset()
+            for row in self.node_grid:
+                for node in row:
+                    row.reset()
             self.draw_grid()
             self.update()
 
