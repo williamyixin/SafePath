@@ -119,7 +119,9 @@ class MainFrame(Frame):
         def clear_grid():
             for row in self.node_grid:
                 for node in row:
-                    row.reset()
+                    node.reset()
+            self.start_node = None
+            self.end_node = None
             self.draw_grid()
             self.update()
 
