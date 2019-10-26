@@ -43,14 +43,15 @@ class Algorithms:
                 start_node.label = 0
 
                 #Edge relaxation algorithm
-                for edge in list_edges:
-                    distance = edge.end.weight - edge.start.weight
-                    if distance > 0:
-                        distance = pow(2,distance) #double if it's uphill: change to exponential?
-                    if edge.end.label > edge.start.label + distance:
-                        edge.end.label = edge.start.label + distance
-                        edge.end.fastest_trace_previous_node = edge.start
-                        main_frame.highlight_node(edge.end.fastest_trace_previous_node)
+                for i in range(len(list_nodes) - 1):
+                    for edge in list_edges:
+                        distance = edge.end.weight - edge.start.weight
+                        if distance > 0:
+                            distance = pow(2,distance) #double if it's uphill: change to exponential?
+                        if edge.end.label > edge.start.label + distance:
+                            edge.end.label = edge.start.label + distance
+                            edge.end.fastest_trace_previous_node = edge.start
+                            main_frame.highlight_node(edge.end.fastest_trace_previous_node)
                 #Detect negative weight cycle paradoxes
                 #for edge in list_edges:
                  #   if edge.end.label > edge.start.label:
