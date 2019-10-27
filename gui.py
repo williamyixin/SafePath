@@ -57,6 +57,10 @@ class MainFrame(Frame):
             self.io_manager.set_nodes_list(self.node_grid)
             self.io_manager.read_elevation_data(load_path)
 
+        for row in self.node_grid:
+            for node in row:
+                node.update_edge_weight()
+
         self.bg_image = None
         if image_path is not None:
             pilImage = Image.open(image_path)

@@ -76,6 +76,9 @@ class Node:
 
     def increase_weight(self):
         self.weight = min(self.weight+1, 5)
+        self.update_edge_weight()
+
+    def update_edge_weight(self):
         for edge in self.connections:
             edge.weight = abs(edge.start.weight - edge.end.weight)
 
