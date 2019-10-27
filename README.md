@@ -25,5 +25,11 @@ And finally, to properly implement event-handling, we used multi-threading to al
 
 And yet, despite having overcome multiple points of adversity, we still believe we can improve on our application in the future. Data collection was sometimes slow, especially with the limitations of Google APIKeys, and the program could use greater abstraction to apply it to solve multiple real-life problems. Through the creation of SafePaths, we not only created a program that has benefits in the consumer industry, but also tested a concept that we had been interested in for some time.
 
+Run Commands
+py gui.py assets/topography_data/topography_testing_halfdome.txt 60 30 assets/images/HalfDomeCropped.png
 
+py gui.py assets/topography_data/topography_testing_golf.txt 60 30 assets/images/GolfCropped.png
 
+py gui.py assets/topography_data/topography_testing_bigc.txt 60 30 assets/images/BigCCropped.png
+
+py gui.py assets/topography_data/topography_testing_hawaii.txt 60 30 assets/images/HawaiiCropped.png
