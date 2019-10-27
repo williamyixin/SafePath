@@ -55,7 +55,6 @@ class MainFrame(Frame):
         if image_path is not None:
             self.img = parent.PhotoImg(image_path)
 
-
         self.draw_grid()
         self.update()
 
