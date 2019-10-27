@@ -60,6 +60,7 @@ class MainFrame(Frame):
         self.bg_image = None
         if image_path is not None:
             pilImage = Image.open(image_path)
+            pilImage = pilImage.resize((self.frame_width, self.frame_height), Image.ANTIALIAS)
             self.bg_image = ImageTk.PhotoImage(pilImage)
 
         self.draw_grid()
