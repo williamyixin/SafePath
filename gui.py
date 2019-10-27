@@ -38,6 +38,10 @@ class MainFrame(Frame):
         self.start_node = None
         self.end_node = None
 
+        self.debug_mode = False
+
+        self.toggle_image = True
+
         self.finding_path = False
 
         self.pack(fill=BOTH)
@@ -52,8 +56,9 @@ class MainFrame(Frame):
             self.io_manager.set_nodes_list(self.node_grid)
             self.io_manager.read_elevation_data(load_path)
 
+        self.bg_image = None
         if image_path is not None:
-            self.img = parent.PhotoImg(image_path)
+            self.bg_image = parent.PhotoImg(image_path)
 
         self.draw_grid()
         self.update()
@@ -150,6 +155,13 @@ class MainFrame(Frame):
         self.clear_grid_button = Button(self.grid_frame, text="Clear Grid", command=clear_grid)
         self.clear_grid_button.pack(side=LEFT, padx=(10, 0))
 
+        # Add Toggle Image button
+        def toggle_image():
+            self.toggle_image = not self.toggle_image
+
+        self.toggle_image_button = Button(self.grid_frame, text="Toggle Image", command=toggle_image)
+        self.toggle_image_button.pack(side=LEFT, padx=(10, 0))
+
 
         # Create instance of Canvas and add to main Frame
 
@@ -204,12 +216,20 @@ class MainFrame(Frame):
         self.canvas.update()
 
     def draw_grid(self):
-        for row in self.node_grid:
-            for node in row:
-                node.draw_node(self.canvas)
+
+        if self.bg_image is not None and self.toggle_image:
+            self.canvas.create_image(self.bg_image)
+            for row in self.node_grid:
+                for node in row:
+                    if node.is_start or node.is_end:
+                        node.draw_node(self.canvas)
+        else:
+            for row in self.node_grid:
+                for node in row:
+                    node.draw_node(self.canvas)
 
     def add_weights(self, x, y):
-        if self.finding_path:
+        if self.finding_path or not self.debug_mode:
             return
 
         # search for selected node
