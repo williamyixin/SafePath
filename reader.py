@@ -1,4 +1,7 @@
 
+import sys
+from node import Node
+
 class IOManager:
 
     def __init__(self):
@@ -11,10 +14,20 @@ class IOManager:
     def read_elevation_data(self, path):
         file = open(path, "r")
         data_point_info = None
+
+        max = -1
+
         for data_point in file:
             data_point_info = data_point.split(" ")
-            self.node_list[int(data_point_info[0])][int(data_point_info[1])].weight = data_point_info[2]
+            self.node_list[int(data_point_info[1])][int(data_point_info[0])].weight = int(data_point_info[2])
             self.elevation_data.append(Point(data_point_info[0], data_point_info[1]))
+
+            if int(data_point_info[2]) > max:
+                max = int(data_point_info[2])
+        Node.max_weight = max
+
+
+
 
 class Point:
 

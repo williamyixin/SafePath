@@ -21,13 +21,16 @@ class MainFrame(Frame):
     # Widget Initialization #
     #########################
 
-    def __init__(self, parent, load_path = None, node_width = 20, node_height = 40, img_path = None):
+    def __init__(self, parent, load_path = None, node_width = 40, node_height = 20, image_path = None):
         super().__init__(parent)
 
         self.node_width = node_width
         self.node_height = node_height
-        self.frame_width = self.node_width*Node.node_size - Node.node_size//2
-        self.frame_height = (self.node_height*Node.node_height)//2
+        ##self.frame_width = self.node_width*Node.node_size - Node.node_size//2
+        ##self.frame_height = (self.node_height*Node.node_height)//2
+
+        self.frame_width = (self.node_width-1)*(Node.node_size)//2
+        self.frame_height = self.node_height*Node.node_height
 
         self.add_barriers = False
         self.mark_start = False
@@ -44,12 +47,16 @@ class MainFrame(Frame):
         self.init_components(parent)
         self.init_grid()
 
-        self.io_manager = IOManager()
-        self.io_manager.set_nodes_list(self.node_grid)
-        self.io_manager.read_elevation_data(load_path)
+        if load_path is not None:
+            self.io_manager = IOManager()
+            self.io_manager.set_nodes_list(self.node_grid)
+            self.io_manager.read_elevation_data(load_path)
+
+        if image_path is not None:
+            self.img = parent.PhotoImg(image_path)
+
 
         self.draw_grid()
-
         self.update()
 
 
@@ -167,9 +174,9 @@ class MainFrame(Frame):
     def init_grid(self):
         self.node_grid = []
         node = None
-        for y in range(self.node_width):
+        for y in range(self.node_height):
             self.node_grid.append([])
-            for x in range(self.node_height):
+            for x in range(self.node_width):
                 node = Node(str(x) + " " + str(y), [], (x-1)*Node.node_size//2
                                               , (y)*Node.node_height, x%2 == y%2)
                 self.node_grid[y].append(node)
@@ -262,8 +269,8 @@ def run_GUI(args=[]):
 
     if len(args) == 3:
         app = MainFrame(root, None, int(args[1]), int(args[2]), None)
-    if len(args) == 1:
-        app = MainFrame(root, str(args[1]), int(args[2]), int(args[3]), str(args[4]))
+    elif len(args) == 4:
+        app = MainFrame(root, str(args[1]), int(args[2]), int(args[3]))
     else:
         app = MainFrame(root)
     root.mainloop()

@@ -2,7 +2,7 @@
 class Node:
 
     node_list = []
-    node_size = 40
+    node_size = 15
     node_height = int(node_size*0.866)
 
     max_weight = 5
