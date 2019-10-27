@@ -37,9 +37,6 @@ class Algorithms:
                 path.insert(0, current_node)
             return path
 
-        def bidirectional_dijkstra(start_node, end_node):
-            return []
-
         def bellman_ford_path_gen(start_node, end_node):
 
 
@@ -74,7 +71,6 @@ class Algorithms:
         #an algorithm.
 
         self.function_map = {"Simple Dijkstra": simple_dijkstra,
-                             "Bidrectional Dijkstra": bidirectional_dijkstra,
                              "Bellman Fords": bellman_ford_path_gen}
 
     def getPath(self, end_node):
