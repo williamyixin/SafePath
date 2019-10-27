@@ -16,7 +16,7 @@ class Algorithms:
             distances, previous_nodes = {i : float('inf') for i in node_list}, {i : None for i in node_list}
             distances[start_node] = 0
             nodes = node_list.copy()
-                    
+
             while nodes:
                 current_node = min(nodes, key=lambda x: distances[x])
                 if distances[current_node] == float('inf'):
