@@ -34,7 +34,7 @@ class MainFrame(Frame):
         self.frame_height = self.node_height*Node.node_height
 
         self.add_barriers = False
-        self.mark_start = False
+        self.mark_start = True
         self.mark_end = False
         self.start_node = None
         self.end_node = None
@@ -91,7 +91,7 @@ class MainFrame(Frame):
 
         self.block_types_combobox = ttk.Combobox(self.grid_frame, state="readonly"
                                                  , values=["Regular", "Barrier", "Start", "End"])
-        self.block_types_combobox.current(0)
+        self.block_types_combobox.current(2)
         self.block_types_combobox.pack(side=LEFT)
 
         def select_block_type(event):
@@ -117,7 +117,7 @@ class MainFrame(Frame):
         # Add Algorithm Select combobox
         Label(self.grid_frame, text="Select algorithm : ").pack(side=LEFT)
         self.graph_algorithms = ttk.Combobox(self.grid_frame, values=list(self.algorithms.function_map.keys()))
-        self.graph_algorithms.current(2)
+        self.graph_algorithms.current(0)
         self.graph_algorithms.pack(side=LEFT)
 
         # Add Start Paths Button
@@ -160,7 +160,9 @@ class MainFrame(Frame):
             self.update()
 
         self.clear_grid_button = Button(self.grid_frame, text="Clear Grid", command=clear_grid)
-        self.clear_grid_button.pack(side=LEFT, padx=(10, 0))
+
+        if not self.toggle_image:
+            self.clear_grid_button.pack(side=LEFT, padx=(10, 0))
 
         # Add Toggle Image button
         def toggle_image():
@@ -260,7 +262,10 @@ class MainFrame(Frame):
             if self.mark_start:
                 if self.start_node is not None:
                     self.start_node.is_start = False
-                    self.start_node.draw_node(self.canvas)
+                    if not self.toggle_image:
+                        self.start_node.draw_node(self.canvas)
+                    else:
+                        self.draw_grid()
                 self.start_node = selected_node
                 selected_node.is_start = self.mark_start
 
@@ -268,7 +273,10 @@ class MainFrame(Frame):
             elif self.mark_end:
                 if self.end_node is not None:
                     self.end_node.is_end = False
-                    self.end_node.draw_node(self.canvas)
+                    if not self.toggle_image:
+                        self.end_node.draw_node(self.canvas)
+                    else:
+                        self.draw_grid()
                 self.end_node = selected_node
                 selected_node.is_end = self.mark_end
             else:
