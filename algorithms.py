@@ -23,7 +23,7 @@ class Algorithms:
                     break
                 for neighbor in current_node.connections:
                     alternative = distances[current_node] + neighbor.end.weight
-                    if alternative < distances[neighbor.end] and not neighbor.is_barrier:
+                    if alternative < distances[neighbor.end] and not neighbor.end.is_barrier:
                         distances[neighbor.end] = alternative
                         previous_nodes[neighbor.end] = current_node
                     main_frame.highlight_node(neighbor.end)
