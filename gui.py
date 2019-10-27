@@ -7,6 +7,7 @@ from edge import Edge
 
 from reader import IOManager
 
+from PIL import Image, ImageTk
 import sys
 
 import time
@@ -38,7 +39,7 @@ class MainFrame(Frame):
         self.start_node = None
         self.end_node = None
 
-        self.debug_mode = False
+        self.debug_mode = True
 
         self.toggle_image = True
 
@@ -58,7 +59,8 @@ class MainFrame(Frame):
 
         self.bg_image = None
         if image_path is not None:
-            self.bg_image = parent.PhotoImg(image_path)
+            pilImage = Image.open(image_path)
+            self.bg_image = ImageTk.PhotoImage(pilImage)
 
         self.draw_grid()
         self.update()
@@ -158,6 +160,8 @@ class MainFrame(Frame):
         # Add Toggle Image button
         def toggle_image():
             self.toggle_image = not self.toggle_image
+            self.draw_grid()
+            self.update()
 
         self.toggle_image_button = Button(self.grid_frame, text="Toggle Image", command=toggle_image)
         self.toggle_image_button.pack(side=LEFT, padx=(10, 0))
@@ -218,7 +222,7 @@ class MainFrame(Frame):
     def draw_grid(self):
 
         if self.bg_image is not None and self.toggle_image:
-            self.canvas.create_image(self.bg_image)
+            self.canvas.create_image(self.frame_width//2, self.frame_height//2, image=self.bg_image)
             for row in self.node_grid:
                 for node in row:
                     if node.is_start or node.is_end:
@@ -288,8 +292,8 @@ def run_GUI(args=[]):
 
     if len(args) == 3:
         app = MainFrame(root, None, int(args[1]), int(args[2]), None)
-    elif len(args) == 4:
-        app = MainFrame(root, str(args[1]), int(args[2]), int(args[3]))
+    elif len(args) == 5:
+        app = MainFrame(root, str(args[1]), int(args[2]), int(args[3]), str(args[4]))
     else:
         app = MainFrame(root)
     root.mainloop()
