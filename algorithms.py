@@ -6,28 +6,33 @@ class Algorithms:
     def __init__(self, main_frame):
         # William, format your functions like this
 
+        prev_start_node = None
+        prev_nodes = None
+
         def simple_dijkstra(start_node, end_node): #only returns the dictionary of distances so far
+            nonlocal prev_start_node
+            nonlocal prev_nodes
+            
+            if prev_start_node is not start_node:
+                # Actual Dijkstra's stuff
+                node_list = Node.node_list.copy()
+                distances, previous_nodes = {i : float('inf') for i in node_list}, {i : None for i in node_list}
+                distances[start_node] = 0
+                nodes = node_list.copy()
 
-            # call "main_frame.highlight_node(node)" to highlight a node
-            main_frame.highlight_node(start_node)
-
-            # Actual Dijkstra's stuff
-            node_list = Node.node_list.copy()
-            distances, previous_nodes = {i : float('inf') for i in node_list}, {i : None for i in node_list}
-            distances[start_node] = 0
-            nodes = node_list.copy()
-
-            while nodes:
-                current_node = min(nodes, key=lambda x: distances[x])
-                if distances[current_node] == float('inf'):
-                    break
-                for neighbor in current_node.connections:
-                    alternative = distances[current_node] + neighbor.end.weight
-                    if alternative < distances[neighbor.end] and not neighbor.end.is_barrier:
-                        distances[neighbor.end] = alternative
-                        previous_nodes[neighbor.end] = current_node
-                    main_frame.highlight_node(neighbor.end)
-                nodes.remove(current_node)
+                while nodes:
+                    current_node = min(nodes, key=lambda x: distances[x])
+                    if distances[current_node] == float('inf'):
+                        break
+                    for neighbor in current_node.connections:
+                        alternative = distances[current_node] + neighbor.end.weight
+                        if alternative < distances[neighbor.end] and not neighbor.end.is_barrier:
+                            distances[neighbor.end] = alternative
+                            previous_nodes[neighbor.end] = current_node
+                        main_frame.highlight_node(neighbor.end)
+                    nodes.remove(current_node)
+            else:
+                previous_nodes = prev_nodes
 
             path, current_node = [], end_node
             while previous_nodes[current_node]:
@@ -35,6 +40,9 @@ class Algorithms:
                 current_node = previous_nodes[current_node]
             if path:
                 path.insert(0, current_node)
+
+            prev_start_node = start_node
+            prev_nodes = previous_nodes
             return path
 
         def bellman_ford_path_gen(start_node, end_node):
