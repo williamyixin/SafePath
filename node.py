@@ -87,7 +87,6 @@ class Node:
             riskfactor = (4.966 * gradient + 143.9)/143.9
             edge.weight = riskfactor
 
-
     def reset(self):
         self.weight = 0
         self.is_barrier = False
