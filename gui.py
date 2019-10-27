@@ -5,6 +5,8 @@ from threading import Thread
 from algorithms import Algorithms
 from edge import Edge
 
+from reader import IOManager
+
 import sys
 
 import time
@@ -19,7 +21,7 @@ class MainFrame(Frame):
     # Widget Initialization #
     #########################
 
-    def __init__(self, parent, node_width = 20, node_height = 40):
+    def __init__(self, parent, load_path = None, node_width = 20, node_height = 40, img_path = None):
         super().__init__(parent)
 
         self.node_width = node_width
@@ -41,6 +43,11 @@ class MainFrame(Frame):
         self.init_algorithms()
         self.init_components(parent)
         self.init_grid()
+
+        self.io_manager = IOManager()
+        self.io_manager.set_nodes_list(self.node_grid)
+        self.io_manager.read_elevation_data(load_path)
+
         self.draw_grid()
 
         self.update()
@@ -242,18 +249,6 @@ class MainFrame(Frame):
         super().destroy()
         exit(1)
 
-class popupWindow(object):
-    def __init__(self,master):
-        top=self.top=Toplevel(master)
-        self.l=Label(top,text="Hello World")
-        self.l.pack()
-        self.e=Entry(top)
-        self.e.pack()
-        self.b=Button(top,text='Ok',command=self.cleanup)
-        self.b.pack()
-    def cleanup(self):
-        self.value=self.e.get()
-        self.top.destroy()
 
 def run_GUI(args=[]):
     """Start the GUI.
@@ -266,7 +261,9 @@ def run_GUI(args=[]):
     root.geometry("520x600")
 
     if len(args) == 3:
-        app = MainFrame(root, int(args[1]), int(args[2]))
+        app = MainFrame(root, None, int(args[1]), int(args[2]), None)
+    if len(args) == 1:
+        app = MainFrame(root, str(args[1]), int(args[2]), int(args[3]), str(args[4]))
     else:
         app = MainFrame(root)
     root.mainloop()
@@ -277,7 +274,6 @@ def run_GUI(args=[]):
 ##########################
 
 def run():
-
     run_GUI(sys.argv)
 
 if __name__ == '__main__':
