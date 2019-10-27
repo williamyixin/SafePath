@@ -294,7 +294,6 @@ def run_GUI(args=[]):
         app = MainFrame(root)
     root.mainloop()
 
-
 ##########################
 # Command Line Interface #
 ##########################
