@@ -12,7 +12,7 @@ class Algorithms:
         def simple_dijkstra(start_node, end_node): #only returns the dictionary of distances so far
             nonlocal prev_start_node
             nonlocal prev_nodes
-            
+
             if prev_start_node is not start_node:
                 # Actual Dijkstra's stuff
                 node_list = Node.node_list.copy()

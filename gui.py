@@ -232,7 +232,7 @@ class MainFrame(Frame):
             self.canvas.create_image(self.frame_width//2, self.frame_height//2, image=self.bg_image)
             for row in self.node_grid:
                 for node in row:
-                    if node.is_start or node.is_end:
+                    if node.is_start or node.is_end or node.is_barrier:
                         node.draw_node(self.canvas)
         else:
             for row in self.node_grid:
