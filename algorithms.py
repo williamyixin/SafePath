@@ -22,7 +22,7 @@ class Algorithms:
                 if distances[current_node] == float('inf'):
                     break
                 for neighbor in current_node.connections:
-                    alternative = distances[current_node] + neighbor.end.weight
+                    alternative = distances[current_node] + neighbor.weight
                     if alternative < distances[neighbor.end] and not neighbor.end.is_barrier:
                         distances[neighbor.end] = alternative
                         previous_nodes[neighbor.end] = current_node

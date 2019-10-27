@@ -80,7 +80,13 @@ class Node:
 
     def update_edge_weight(self):
         for edge in self.connections:
-            edge.weight = abs(edge.start.weight - edge.end.weight)
+            #edge.weight = abs(edge.start.weight - edge.end.weight)
+            edgeDiff = edge.start.weight - edge.end.weight
+            gradient = abs(edgeDiff) / (1.717 / 3 * 1)
+
+            riskfactor = (4.966 * gradient + 143.9)/143.9
+            edge.weight = riskfactor
+
 
     def reset(self):
         self.weight = 0
