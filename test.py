@@ -6,6 +6,8 @@ import sys
 import random #for testing only
 from math import sqrt
 
+ASPECT_RATIO = 0.5*1.15470053838*23/18
+
 def elevation(lat, lng):
     # return random.randint(200,500)
     apikey = "AIzaSyBKatwBAmFSYjefKc2a6QPPdvMPG57Pwbg"
@@ -32,7 +34,7 @@ def collectdata(start_lat, start_lon, tile_size, grid_x, grid_y): #start_lat and
     for i in range(grid_y):
         for j in range(grid_x):
             multiplier = (1-2*(i%2)) * (1-2*(j%2))
-            curr_lat, curr_lon = start_lat - tile_size * i + (multiplier * (tile_size * sqrt(3) / 6)), start_lon + tile_size * 0.5 * j
+            curr_lat, curr_lon = start_lat - tile_size * i + (multiplier * (tile_size * sqrt(3) / 6)), start_lon + tile_size * ASPECT_RATIO * j
             elev = elevation(curr_lat, curr_lon)
 
             progress = str(round(100*counter/num_data_points))
