@@ -1,6 +1,7 @@
 from __future__ import print_function
 import json
 import requests
+import sys
 
 import random #for testing only
 from math import sqrt
@@ -45,4 +46,5 @@ def collectdata(start_lat, start_lon, tile_size, grid_x, grid_y): #start_lat and
             #print(curr_lat, curr_lon, elev)
 
 #collectdata(0, 0, 1, 50, 25)
-collectdata(37.88785, -122.24825, 0.00001, 50, 25)
+command_args = sys.argv
+collectdata(command_args[1], command_args[2], command_args[3], command_args[4], command_args[5])
