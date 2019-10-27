@@ -2,7 +2,7 @@
 class Node:
 
     node_list = []
-    node_size = 15
+    node_size = 20
     node_height = int(node_size*0.866)
 
     max_weight = 5
@@ -44,15 +44,15 @@ class Node:
     # Draws the node on the passed canvas
     def draw_node(self, canvas):
         rel_weight = self.relative_weight()
-        color = fill='#{:02x}{:02x}{:02x}'.format(int(255 - rel_weight * 180),
-                                                                      int(229 - rel_weight * 180),
-                                                                      int(180 - rel_weight * 180))
+        color = fill='#{:02x}{:02x}{:02x}'.format(int(70 + rel_weight * 180),
+                                                                      int(50 + rel_weight * 180),
+                                                                      int(rel_weight * 180))
         if self.is_barrier:
-            color='#{:02x}{:02x}{:02x}'.format(0, 0, 200)
+            color='blue'
         elif self.is_start:
-            color = '#{:02x}{:02x}{:02x}'.format(255, 0, 0)
+            color = 'red'
         elif self.is_end:
-            color = '#{:02x}{:02x}{:02x}'.format(0, 255, 0)
+            color = 'green'
 
         ## canvas.create_rectangle(self.x, self.y, self.x + Node.node_size, self.y + Node.node_size, fill=color)
         if self.is_highlighted:
@@ -65,20 +65,14 @@ class Node:
                              , self.triangle_poly[4], self.triangle_poly[5], mouse_x, mouse_y)
 
     def isInside(self, x1, y1, x2, y2, x3, y3, x, y):
-
-        A = self.area(x1, y1, x2, y2, x3, y3)
-        A1 = self.area(x, y, x2, y2, x3, y3)
-        A2 = self.area(x1, y1, x, y, x3, y3)
-        A3 = self.area(x1, y1, x2, y2, x, y)
-
-        if (A == A1 + A2 + A3):
+        if (self.area(x1, y1, x2, y2, x3, y3) == self.area(x, y, x2, y2, x3, y3) + self.area(x1, y1, x, y, x3, y3)
+                + self.area(x1, y1, x2, y2, x, y)):
             return True
         else:
             return False
 
     def area(self, x1, y1, x2, y2, x3, y3):
-        return abs((x1 * (y2 - y3) + x2 * (y3 - y1)
-                    + x3 * (y1 - y2)) / 2.0)
+        return abs((x1 * (y2 - y3) + x2 * (y3 - y1) + x3 * (y1 - y2)) / 2.0)
 
     def increase_weight(self):
         self.weight = min(self.weight+1, 5)

@@ -15,16 +15,24 @@ class IOManager:
         file = open(path, "r")
         data_point_info = None
 
-        max = -1
+        max = -1.0
+        min = sys.maxsize
 
         for data_point in file:
             data_point_info = data_point.split(" ")
-            self.node_list[int(data_point_info[1])][int(data_point_info[0])].weight = int(data_point_info[2])
+            self.node_list[int(data_point_info[1])][int(data_point_info[0])].weight = float(data_point_info[2])
             self.elevation_data.append(Point(data_point_info[0], data_point_info[1]))
 
-            if int(data_point_info[2]) > max:
-                max = int(data_point_info[2])
-        Node.max_weight = max
+            if float(data_point_info[2]) > max:
+                max = float(data_point_info[2])
+            if float(data_point_info[2]) < min:
+                min = float(data_point_info[2])
+
+        for row in self.node_list:
+            for node in row:
+                node.weight -= min
+
+        Node.max_weight = max - min
 
 
 
