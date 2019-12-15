@@ -50,4 +50,4 @@ def collectdata(start_lat, start_lon, tile_size, grid_x, grid_y, lon_offset): #s
 
 #collectdata(0, 0, 1, 50, 25)
 command_args = sys.argv
-collectdata(float(command_args[1]), float(command_args[2]), float(command_args[3]), int(command_args[4]), int(command_args[5]), int(command_args[5]))
+collectdata(float(command_args[1]), float(command_args[2]), float(command_args[3]), int(command_args[4]), int(command_args[5]), int(command_args[6]))
